@@ -11,7 +11,7 @@ pipeline{
         }
         stage("Docker login"){
             steps{
-                sh 'echo \'$DOCKERHUB_CREDENTIALS_PSW\'  | docker login -u \'$DOCKERHUB_USERNAME_USR\' --password'
+                sh ' docker login -u \'$DOCKERHUB_USERNAME_USR\' --password \'$DOCKERHUB_CREDENTIALS_PSW\''
             }
         }
         stage("docker build"){
