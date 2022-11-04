@@ -1,8 +1,8 @@
 pipeline{
     agent any
-    environment {     
-            DOCKERHUB_CREDENTIALS= credentials('dockerhubcreds')     
-        }
+    // environment {     
+    //         DOCKERHUB_CREDENTIALS= credentials('dockerhubcreds')     
+    //     }
     stages{
         stage("Git Checkout"){
             steps{
@@ -11,7 +11,7 @@ pipeline{
         }
         stage("Docker login"){
             steps{
-                sh ' docker login -u \'$DOCKERHUB_USERNAME_USR\' --password \'$DOCKERHUB_CREDENTIALS_PSW\''
+                sh ' docker login -u \'$DOCKERHUB_USERNAME\' --password \'$DOCKERHUB_PASSWORD\''
             }
         }
         stage("docker build"){
