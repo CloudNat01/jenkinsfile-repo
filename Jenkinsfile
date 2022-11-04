@@ -11,7 +11,10 @@ pipeline{
         }
         stage("Docker login"){
             steps{
-                sh ' docker login -u \'$DOCKERHUB_USERNAME\' --password \'$DOCKERHUB_PASSWORD\''
+                withCredentials([string(credentialsId: 'DOCKERHUB_PASSWORD', variable: 'DOCKERHUB_PASSWORD'), string(credentialsId: 'DOCKERHUB_USERNAME', variable: 'DOCKERHUB_USERNAME')]) {
+                    sh ' docker login -u \'$DOCKERHUB_USERNAME\' --password \'$DOCKERHUB_PASSWORD\''
+              }
+                
             }
         }
         stage("docker build"){
