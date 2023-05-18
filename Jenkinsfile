@@ -1,8 +1,6 @@
 pipeline {
     agent any
-    environment {
-        DOCKERHUB_CREDENTIALS = credentials('dockerhubcreds')
-    }
+    
     stages {
         stage("Git Checkout") {
             steps {
