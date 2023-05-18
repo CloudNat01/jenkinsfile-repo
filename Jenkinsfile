@@ -11,20 +11,20 @@ pipeline{
         }
         stage("Docker login"){
             steps{
-                withCredentials([string(credentialsId: 'DOCKERHUB_PASSWORD', variable: 'DOCKERHUB_PASSWORD'), string(credentialsId: 'DOCKERHUB_USERNAME', variable: 'DOCKERHUB_USERNAME')]) {
-                    sh ' docker login -u \'$DOCKERHUB_USERNAME\' --password \'$DOCKERHUB_PASSWORD\''
+                withCredentials([string(credentialsId: 'DOCKERHUB_TOKEN', variable: 'DOCKERHUB_TOKEN'), string(credentialsId: 'DOCKERHUB_USERNAME', variable: 'DOCKERHUB_USERNAME')]) {
+                    sh ' docker login -u \'$DOCKERHUB_USERNAME\' --password \'$DOCKERHUB_TOKEN\''
               }
                 
             }
         }
         stage("docker build"){
             steps{
-                sh 'docket build -t $DOCKERHUB_USERNAME/pipeline-img:latest .'
+                sh 'docket build -t $DOCKERHUB_USERNAME/pipelineb-img:latest .'
             }
         }
         stage("Docker push"){
             steps{
-                sh 'docket push $DOCKERHUB_USERNAME/pipeline-img:latest'
+                sh 'docket push $DOCKERHUB_USERNAME/pipelineb-img:latest'
             }
         }
     }
