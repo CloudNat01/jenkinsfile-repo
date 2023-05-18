@@ -1,5 +1,8 @@
 pipeline {
     agent any
+    environment {
+        DOCKERHUB_CREDENTIALS = credentials('dockerhubcreds')
+    }
     stages {
         stage("Git Checkout") {
             steps {
@@ -9,20 +12,21 @@ pipeline {
         stage("Docker login") {
             steps {
                 withCredentials([string(credentialsId: 'DOCKERHUB_TOKEN', variable: 'DOCKERHUB_TOKEN'), string(credentialsId: 'DOCKERHUB_USERNAME', variable: 'DOCKERHUB_USERNAME')]) {
-                    sh "docker login -u $DOCKERHUB_USERNAME --password-stdin <<< $DOCKERHUB_TOKEN"
+                    sh '''
+                        echo $DOCKERHUB_TOKEN | docker login -u $DOCKERHUB_USERNAME --password-stdin
+                    '''
                 }
             }
         }
         stage("Docker build") {
             steps {
-                sh "docker build -t $DOCKERHUB_USERNAME/pipelineb-img:latest ."
+                sh 'docker build -t $DOCKERHUB_USERNAME/pipelineb-img:latest .'
             }
         }
         stage("Docker push") {
             steps {
-                sh "docker push $DOCKERHUB_USERNAME/pipelineb-img:latest"
+                sh 'docker push $DOCKERHUB_USERNAME/pipelineb-img:latest'
             }
         }
     }
 }
-
