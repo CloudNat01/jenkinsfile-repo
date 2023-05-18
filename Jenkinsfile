@@ -12,7 +12,7 @@ pipeline{
         stage("Docker login"){
             steps{
                 withCredentials([string(credentialsId: 'DOCKERHUB_TOKEN', variable: 'DOCKERHUB_TOKEN'), string(credentialsId: 'DOCKERHUB_USERNAME', variable: 'DOCKERHUB_USERNAME')]) {
-                    sh ' docker login -i -u \'$DOCKERHUB_USERNAME\' --password-stdin \'$DOCKERHUB_TOKEN\''
+                    sh ' docker login -u \'$DOCKERHUB_USERNAME\' --password \'$DOCKERHUB_TOKEN\''
               }
                 
             }
