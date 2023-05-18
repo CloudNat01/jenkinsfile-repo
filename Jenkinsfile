@@ -18,12 +18,12 @@ pipeline {
         }
         stage("Docker build") {
             steps {
-                sh 'docker build -t $DOCKERHUB_USERNAME/pipelineb-img:latest .'
+                sh "docker build -t $DOCKERHUB_USERNAME/pipelineb-img:latest ."
             }
         }
         stage("Docker push") {
             steps {
-                sh 'docker push $DOCKERHUB_USERNAME/pipelineb-img:latest'
+                sh "docker push $DOCKERHUB_USERNAME/pipelineb-img:latest"
             }
         }
     }
